@@ -1,5 +1,6 @@
 from django.shortcuts import render,HttpResponse
 from home.models import Contact
+from django.contrib import messages
 
 # Create your views here.def home(index):
 def home(request):
@@ -15,7 +16,13 @@ def contact(request):
         phone=request.POST['phone']
         content =request.POST['content']
         print(name,email,phone,content)
-        contact=Contact(name=name, email=email, phone=phone, content=content)
-        contact.save()
+
+        if len(name)<2 or len(email)<3 or len(phone)<10 or len(content)<10:
+            messages.error(request,"Please fill the form correctlt!")
+        else:
+            contact=Contact(name=name, email=email, phone=phone, content=content)
+            contact.save()
+            messages.success(request,"Your response has been submitted.")
+
     return render(request,'home/contact.html')
 
