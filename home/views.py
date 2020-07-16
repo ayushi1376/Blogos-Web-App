@@ -2,8 +2,11 @@ from django.shortcuts import render,HttpResponse
 
 # Create your views here.def home(index):
 def home(request):
-    return HttpResponse('This is home.')
+    return render(request,'home/home.html')
+    # return HttpResponse('This is home.')
 def about(request):
-    return HttpResponse('This is about.')
+    return render(request,'home/about.html')
+    # return HttpResponse('This is about.')
 def contact(request):
-    return HttpResponse("This is contact")
+    return render(request,'home/contact.html')
+    # return HttpResponse("This is contact")
