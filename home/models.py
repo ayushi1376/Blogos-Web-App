@@ -7,3 +7,4 @@ class Contact(models.Model):
     phone=models.CharField(max_length=13)
     email=models.CharField(max_length=70)
     content=models.TextField
+    timeStamp=models.DateTimeField(auto_now_add=True,blank=True)
