@@ -30,11 +30,13 @@ def contact(request):
 def search(request):
     query=request.GET['query']
     if len(query)>78:
-        allPosts=[]
+        allPosts=Post.objects.none()
     else:
-        allPosts=Post.objects.filter(title__icontains=query)
+        allPostsTitle=Post.objects.filter(title__icontains=query)
+        allPostsContent=Post.objects.filter(content__icontains=query)
+        allPosts=allPostsTitle.union(allPostsContent)
     if allPosts.count()==0:
-        messages.error(request,"Sorry, no search results found. Please refine your query!")
+        messages.warning(request,"Sorry, no search results found. Please refine your query!")
 
     params={'allPosts':allPosts,'query':query}
     return render(request,'home/search.html',params)
