@@ -4,6 +4,14 @@
 {% block body %}
 <div class="container my-3">
 <h2>Search Results: </h2>
+{% if allPosts|length < 1 %}
+<p>No search results. Sorry! </p>
+Your search query: - <b>{{query}}</b> - did not match any documents.<br>
+  Suggestions:<br>
+    1. Make sure that all words are spelled correctly. <br>
+    2. Try different keywords.<br>
+    3. Try more general keywords.<br>
+{% endif %}
 {% for post in allPosts  %}
 
 

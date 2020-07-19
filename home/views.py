@@ -19,7 +19,7 @@ def contact(request):
         print(name,email,phone,content)
 
         if len(name)<2 or len(email)<3 or len(phone)<10 or len(content)<10:
-            messages.error(request,"Please fill the form correctlt!")
+            messages.error(request,"Please fill the form correctly!")
         else:
             contact=Contact(name=name, email=email, phone=phone, content=content)
             contact.save()
@@ -29,8 +29,12 @@ def contact(request):
 
 def search(request):
     query=request.GET['query']
-    # allPosts=Post.objects.all()
-    allPosts=Post.objects.filter(title__icontains=query)
-    params={'allPosts':allPosts}
+    if len(query)>78:
+        allPosts=[]
+    else:
+        allPosts=Post.objects.filter(title__icontains=query)
+    if allPosts.count()==0:
+        messages.error(request,"Please fill the form correctly!")
+
+    params={'allPosts':allPosts,'query':query}
     return render(request,'home/search.html',params)
-    # return HttpResponse('This is search')
