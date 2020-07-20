@@ -3,6 +3,7 @@ from home.models import Contact
 from django.contrib import messages
 from django.contrib.auth.models import User
 from blog.models import Post
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.def home(index):
 def home(request):
@@ -73,7 +74,27 @@ def handleSignup(request):
         myuser.save()
         messages.success(request,"Your Blogger account has been successfully created.")
         return redirect('home')
-
-
     else:
         return HttpResponse('404-Not Found')
+
+def handlelogin(request):
+    if request.method=='POST':
+        # get the post parameters
+        loginusername=request.POST['loginusername']
+        loginpass=request.POST['loginpass']
+        user=authenticate(username=loginusername,password=loginpass)
+
+        if user is not None:
+            login(request,user)
+            messages.success(request,"You have successfully logged in.")
+            return redirect('home')
+        else:
+            messages.error(request,"Invalid credentials. Try again!")
+            return redirect('home')
+
+    return HttpResponse('404-Not Found')
+
+def handlelogout(request):
+    logout(request)
+    messages.success(request,"You have successfully logged out.")
+    return redirect('home')
