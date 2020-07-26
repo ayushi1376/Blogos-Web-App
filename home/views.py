@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from blog.models import Post
 from django.contrib.auth import authenticate, login, logout
 
-# Create your views here.def home(index):
+# HTML pages
+
 def home(request):
     return render(request,'home/home.html')
 
@@ -43,6 +44,8 @@ def search(request):
 
     params={'allPosts':allPosts,'query':query}
     return render(request,'home/search.html',params)
+
+#authentication APIs
 
 def handleSignup(request):
     if request.method=='POST':
