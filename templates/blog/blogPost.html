@@ -2,6 +2,7 @@
 {% block title %} BlogPost {% endblock title %}
 {% block blogactive %}active{% endblock blogactive %}
 {% block body %}
+{% load humanize %}
 <div class="container my-3">
         <h2 class="blog-post-title">{{post.title}}</h2>
         <p class="blog-post-meta">{{post.timeStamp}} by <a href="/about">{{post.author}}</a></p>
@@ -10,24 +11,30 @@
         <hr>
 </div>
 <div class="container">
-  <h2>Comments</h2>
-  <form action="/blog/postComment" method="post">
-  {% csrf_token %}
-  <div class="form-group">
-    <label for="exampleInputEmail1">Post a comment</label>
-    <input type="text" class="form-control" name="comment" placeholder="comment here">
-  </div>
-  
-  <input type="hidden" name="postSno" value="{{post.sno}}" >
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+  <h2>Comments ({{comments.count}})</h2>
+  <div class="my-2">
+    {% if user.is_authenticated %}
+        <form action="/blog/postComment" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="exampleInputEmail1">Post a comment</label>
+            <input type="text" class="form-control" name="comment" placeholder="comment here">
+          </div>
+          <input type="hidden" name="postSno" value="{{post.sno}}" >
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    {% else %}
+    <p>Please login to post comments!!</p>
+    {% endif %}
+    
+</div>
 {% for comment in comments  %}
   <div class="row my-3">
     <div class="col-md-1">
-    <img class="rounded mx-auto d-block w-100 p-2" src="/static/User.jpg" alt="User">
+    <img class="rounded mx-auto d-block w-100 p-2 rounded-circle border border-dark" src="/static/User.jpg" alt="User">
     </div>
-    <div class="col-md-11">
-    <b>{{comment.user.username}} </b> at {{comment.timestamp}}
+    <div class="col-md-11 rounded-sm">
+    <b>{{comment.user.username}} </b> <span class="badge badge-pill badge-secondary">{{comment.timestamp | naturaltime}}</span>
       <div>
         {{comment.comment}}
       </div>
