@@ -21,7 +21,6 @@ def blogPost(request,slug):
             repDict[r.parent.sno]=[r]
         else:
             repDict[r.parent.sno].append(r)
-    print(repDict)
     context={'post':post,'comments':comments, 'user': request.user, 'repDict': repDict}
     return render(request,'blog/blogPost.html',context)
     

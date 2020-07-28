@@ -8,7 +8,7 @@
         <h2 class="blog-post-title">{{post.title}}</h2>
         <p class="blog-post-meta">{{post.timeStamp}} by <a href="/about">{{post.author}}</a></p>
 
-        <p>{{post.content}}</p>
+        <p>{{post.content|safe}}</p>
         <hr>
 </div>
 <div class="container">
@@ -40,7 +40,9 @@
       <div>
         {{comment.comment}}
       </div>
-      <div class="reply mx-0">
+       
+      <div class="reply mx-0 mt-2">
+      {% if user.is_authenticated %}
           <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#replyBox{{comment.sno}}" aria-expanded="false" aria-controls="replyBox{{comment.sno}}">
             Reply
           </button>
@@ -58,11 +60,27 @@
               </form>
           </div>
         </div>
+        {% else %}
+            <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#replyBox{{comment.sno}}" aria-expanded="false" aria-controls="replyBox{{comment.sno}} disabled">
+            Login to reply.
+          </button> 
+        {% endif %}
 
-        <div class="replies bg-danger my-2">
+        <div class="replies my-2">
             {% for rep in repDict|get_val:comment.sno %}
-                {{rep}}
+            <div class="row my-2">
+                  <div class="col-md-1">
+                      <img class="rounded mx-auto d-block w-75 p-2 rounded-circle border border-dark" src="/static/User.jpg" alt="User">
+                  </div>
+                  <div class="col md-11">
+                      <b>{{rep.user.username}} </b> <span class="badge badge-pill badge-secondary">{{rep.timestamp | naturaltime}}</span>
+                  <div>
+                    {{rep.comment}}
+                  </div>
+                </div>
                 <br>
+                </div>
+                
             {% endfor %}
 
         </div>
