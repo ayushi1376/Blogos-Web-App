@@ -1,19 +1,72 @@
 <!doctype html>
 <html lang="en">
   <head>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <style>
+		
+		/* Style the navbar */
+		#navbar {
+		  overflow: hidden;
+		  background-color: #333;
+		}
+
+		/* Navbar links */
+		#navbar a {
+		  float: left;
+		  display: block;
+		  color: #f2f2f2;
+		  text-align: center;
+		  padding: 14px;
+		  text-decoration: none;
+		}
+
+		/* Page content */
+		.content {
+		  padding: 16px;
+		}
+
+		/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+		.sticky + .content {
+		  padding-top: 60px;
+		}
+
+        #navbarNav {
+            margin:0; padding: 0; 
+            font-family: 'EB Garamond', serif;
+            font-family: 'Pacifico', cursive;
+        }
+
+        .navbar-brand{
+          margin:0;
+          padding:0;
+        }
+
+        .logo{
+          height:50px;
+          padding-right: 15px;
+          padding-left: 5px;
+        }
+
+        .navbar-inverse{
+          height:65px;
+          padding-top:5px;
+        }
+        </style>
+  
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-    <title>{% block title %}  {% endblock title %}</title>
+   
+        <title>{% block title %}  {% endblock title %}</title>
   </head>
   
   <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">Blogger</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" data-target="#navbar" >
+ 
+  <a class="navbar-brand" href="/"> <img src="static\logo.jpg" alt="logo" class="img-responsive logo"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
